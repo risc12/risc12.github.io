@@ -1,3 +1,9 @@
+---
+{
+  "title": "First post"
+}
+---
+
 #First post!
 
 ##First heading

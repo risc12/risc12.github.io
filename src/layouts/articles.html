@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>My Blog: {{title}}</title>
+  <meta name="description" content="{{title}}">
+  <meta name="author" content="{{author}}">
+</head>
+
+<body>
+  <nav>
+    {{#each articles}}
+      <li>
+        {{title}}
+        {{file}}
+      </li>
+    {{/each}}
+  </nav>
+  <main>
+    [[article]]
+  </main>
+</body>
+</html>
