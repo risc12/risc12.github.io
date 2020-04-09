@@ -5,19 +5,46 @@
   <title>My Blog: {{title}}</title>
   <meta name="description" content="{{title}}">
   <meta name="author" content="{{author}}">
+
+  <link href="/assets/styles.css" rel="stylesheet">
 </head>
 
 <body>
-  <nav>
-    {{#each articles}}
-      <li>
-        {{title}}
-        {{file}}
-      </li>
-    {{/each}}
-  </nav>
   <main>
-    [[article]]
+    <article>
+      <header>
+        <h1>Remco's Blog</h1>
+        <h2>{{title}}</h2>
+        <div class="meta">
+          <span>
+            🗓 2020-04-07
+          </span>
+          <span>
+            🏷 Try-outs
+          </span>
+        </div>
+      </header>
+      [[article]]
+    </article>
   </main>
+
+  <nav>
+    <div class="section">
+      <h3>Other posts</h3>
+      <ul>
+        {{#each articles}}
+          <li>
+            <a href="/articles/{{slug}}">{{title}}</a>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  </nav>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-light.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

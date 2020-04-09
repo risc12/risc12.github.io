@@ -7,7 +7,7 @@ distributable_files := $(patsubst compiled_handlebars/%,dist/%,$(compiled_handle
 
 article_jsons := $(wildcard compiled_handlebars/articles/*.json)
 
-all: clean_all $(compiled_markdown_files) fill_articles_json $(compiled_handlebars_files) compile_index prepare_dist clean
+all: clean_all $(compiled_markdown_files) fill_articles_json $(compiled_handlebars_files) compile_index move_styles prepare_dist clean
 
 clean_all:
 	-rm -r compiled_markdown
@@ -46,6 +46,8 @@ compiled_handlebars/%: compiled_markdown/%
 	# Render the handlebars, give it the metadata
 	# TODO: Expose partials and helpers 
 	hbs --data $(patsubst %.html,%.json,$<) --data 'src/data/*.json' --data 'data/articles.json' $@ --output $(dir $@)
+	mkdir $(patsubst %.html,%,$@)
+	mv $@ $(patsubst %.html,%/index.html,$@)
 
 compile_index:
 	# Render the handlebars of the index, give it the metadata
@@ -55,10 +57,14 @@ compile_index:
 prepare_dist:
 	# A clean procedure to move the built files to the dist folder.
 	mkdir -p dist/articles
-	cp compiled_handlebars/articles/*.html dist/articles/
+	cp -r compiled_handlebars/articles/* dist/articles/
 	cp compiled_handlebars/index.html dist/index.html
 	# TODO: Copy assets
 
 install:
 	npm install showdown -g
 	npm install hbs-cli -g
+
+move_styles:
+	mkdir -p dist/assets
+	cp -r src/assets dist/

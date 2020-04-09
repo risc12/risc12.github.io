@@ -1,9 +1,29 @@
-<h1> Hello! </h1>
-<nav>
-{{#each articles}}
-  <li>
-	{{title}}
-	{{file}}
-  </li>
-{{/each}}
-</nav>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Remco's Blog</title>
+  <meta name="description" content="{{title}}">
+  <meta name="author" content="{{author}}">
+
+  <link href="/assets/styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <main>
+    <article>
+      <header>
+        <h1>Remco's Blog</h1>
+        <h2>Home</h2>
+        <ul>
+          {{#each articles}}
+            <li>
+              <a href="/articles/{{slug}}">{{title}}</a>
+            </li>
+          {{/each}}
+        </ul>
+      </header>
+    </article>
+  </main>
+</body>
+</html>
