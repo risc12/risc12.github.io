@@ -25,6 +25,9 @@ jobs:
       with:
         node-version: '10.x'
 
+    - name: Install dependencies
+      run: make install
+      
     # Runs a single command using the runners shell
     - name: Make
       run: make
