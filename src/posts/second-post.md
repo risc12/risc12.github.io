@@ -1,6 +1,7 @@
 ---
 {
-  "title": "Second post"
+  "title": "Second post",
+  "createdAt": "2020-04-15"
 }
 ---
 

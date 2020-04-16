@@ -1,6 +1,7 @@
 ---
 {
-  "title": "First post"
+  "title": "First post",
+  "createdAt": "2020-04-12"
 }
 ---
 
