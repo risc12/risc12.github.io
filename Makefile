@@ -10,15 +10,15 @@ post_jsons := $(wildcard compiled_handlebars/posts/*.json)
 all: clean_all $(compiled_markdown_files) fill_posts_json $(compiled_handlebars_files) compile_index move_styles prepare_dist clean
 
 clean_all:
-	-rm -r compiled_markdown
-	-rm -r data
-	-rm -r compiled_handlebars
-	-rm -r dist
+	-rm -r compiled_markdown || true
+	-rm -r data || true
+	-rm -r compiled_handlebars || true
+	-rm -r dist || true
 
 clean:
-	-rm -r compiled_markdown
-	-rm -r data
-	-rm -r compiled_handlebars
+	-rm -r compiled_markdown || true
+	-rm -r data || true
+	-rm -r compiled_handlebars || true
 
 compiled_markdown/%: src/%
 	mkdir -p $(dir $@)
