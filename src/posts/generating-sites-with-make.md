@@ -9,11 +9,11 @@ As a sideproject I wanted to generate a blog using a [Makefile](https://www.gnu.
 
 I can't really recommend it and there are quite some improvements to make (no pun intended), but I learned some things regardless!
 
-To check the version that this post talks about, you can find it on [GitHub](https://github.com/risc12/risc12.github.io/blob/d393078d210c71d30934ea9bf30b6bf3f047ade5/Makefile).
+To see the version of the Makefile that this post talks about, you can find it on [GitHub](https://github.com/risc12/risc12.github.io/blob/d393078d210c71d30934ea9bf30b6bf3f047ade5/Makefile).
 
-If you are playing around with Makefiles, and it isn't working as it should, make sure you use tabs, not spaces. That one might've gotten me once or twice...
+_If you are playing around with Makefiles, and it isn't working as it should, make sure you use tabs, not spaces. That one might've gotten me once or twice..._
 
-Without further ado, this is how it works!
+Without further ado, let's see how it works!
 
 ### The top
 Let's start at the top:
