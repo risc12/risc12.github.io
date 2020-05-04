@@ -37,7 +37,7 @@ fill_posts_json:
 	done; \
 	cd ../..;
 	# jq takes that protojson and formats it properly
-	echo "{ \"posts\": $$(cat compiled_markdown/posts.protojson | jq -s .) }" > data/posts.json
+	echo "{ \"posts\": $$(cat compiled_markdown/posts.protojson | jq -s '. |= sort_by(.createdAt) | reverse') }" > data/posts.json
 
 compiled_handlebars/%: compiled_markdown/%
 	mkdir -p $(dir $@)
