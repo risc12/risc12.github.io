@@ -17,7 +17,7 @@
         <h2>{{title}}</h2>
         <div class="meta">
           <span>
-            🗓 2020-04-07
+            🗓 {{createdAt}}
           </span>
           <span>
             🏷 Try-outs
@@ -32,9 +32,9 @@
     <div class="section">
       <h3>Other posts</h3>
       <ul>
-        {{#each articles}}
+        {{#each posts}}
           <li>
-            <a href="/articles/{{slug}}">{{title}}</a>
+            <a href="{{slug}}">{{title}}</a>
           </li>
         {{/each}}
       </ul>

@@ -3,7 +3,7 @@
 @import "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-light.min.css" screen;
 
 /* Supersede dark mode when applicable */
-@import "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-dark.min.css" screen and (prefers-color-scheme: dark);
+@import "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-dark-reasonable.min.css" screen and (prefers-color-scheme: dark);
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -20,7 +20,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --link-color: #6464ff;
+    --link-color: #60aeee;
     --meta-color: #8A8A8D;
 
     --border-color: #eee;
