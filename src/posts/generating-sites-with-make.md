@@ -9,7 +9,7 @@ As a sideproject I wanted to generate a blog using a [Makefile](https://www.gnu.
 
 I can't really recommend it and there are quite some improvements to make (no pun intended), but I learned some things regardless!
 
-To see the version of the Makefile that this post talks about, you can find it on [GitHub](https://github.com/risc12/risc12.github.io/blob/d393078d210c71d30934ea9bf30b6bf3f047ade5/Makefile).
+To see the version of the Makefile that this post is about, you can find it on [GitHub](https://github.com/risc12/risc12.github.io/blob/d393078d210c71d30934ea9bf30b6bf3f047ade5/Makefile).
 
 _If you are playing around with Makefiles, and it isn't working as it should, make sure you use tabs, not spaces. That one might've gotten me once or twice..._
 
@@ -33,7 +33,7 @@ Here are some variables that define the files needed for each step.
 markdown_files := $(shell find src -name '*.md')
 ```
 
-This line tells make to create a variable called `markdown_files`, it will use the shell to execute `find src -name '*.md'` which will return all the paths inside the src-folder that end with .md.
+This line tells make to create a variable called `markdown_files`, it will use the shell to execute `find src -name '*.md'` which will return all the paths inside the src-folder that end with `.md`.
 
 The lines following contain a bunch of [`patsubst`](https://www.gnu.org/software/make/manual/make.html#Text-Functions), I basically take the array of markdown files and describe which intermediate files there will be. So the `compiled_markdown_files` live in side the `compiled_markdown`-folder, and the `compiled_handlebars_files` will live inside the `compiled_handlebars`-folder. Note that it also expects .html-files instead of .md files.
 
@@ -133,7 +133,7 @@ Almost there, this step is just there to copy some files around, namely the comp
 Lastly, we remove the intermediate folders.
 
 ### Conclusion
-As you can see, this works (you're looking at the result right now). My main goal was to make something that worked ony any old Unix-like system, but unfortunately I still rely on NPM for `showdown` and `hbs-cli`, so I didn't manage that. I stil like this though, it is something custom, quite simple, pretty fast, and doesn't rely on major frameworks or static site generators.
+As you can see, this works (you're looking at the result right now). My main goal was to make something that worked ony any old Unix-like system, but unfortunately I still rely on NPM for `showdown` and `hbs-cli`, so I didn't manage that. I still like this though, it is something custom, quite simple, pretty fast, and doesn't rely on major frameworks.
 
 Feel free you check my setup on the [`release`-branch](https://github.com/risc12/risc12.github.io/tree/release)
 
