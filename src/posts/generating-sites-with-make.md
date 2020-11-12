@@ -1,22 +1,33 @@
 ---
 {
   "title": "Generating sites with a Makefile",
-  "createdAt": "2020-05-04"
+  "createdAt": "2020-05-04",
+  "description": "As a sideproject I wanted to generate a blog using Makefile, this is a step-by-step explanation of the Makefile powering this blog."
 }
 ---
 
 As a sideproject I wanted to generate a blog using a [Makefile](https://www.gnu.org/software/make/manual/make.html).
 
-I can't really recommend it and there are quite some improvements to make (no pun intended), but I learned some things regardless!
+I can't really recommend it and there are quite some improvements to _make_(no pun intended), but I learned some things regardless!
 
 To see the version of the Makefile that this post is about, you can find it on [GitHub](https://github.com/risc12/risc12.github.io/blob/d393078d210c71d30934ea9bf30b6bf3f047ade5/Makefile).
 
-_If you are playing around with Makefiles, and it isn't working as it should, make sure you use tabs, not spaces. That one might've gotten me once or twice..._
+<aside>If you are playing around with Makefiles, and it isn't working as it should, make sure you use tabs, not spaces. That one might've gotten me once or twice...</aside>
 
 Without further ado, let's see how it works!
 
+### The flow
+I want to be able to write Markdown files, add some meta-data to them, and then generate the complete blog. The flow can be desribed as follows:
+1. Markdown files are compiled into:
+    1. A .html file containing handlebars
+    2. A .json-file containing meta-data about the post
+2. The meta-data files are combined into one posts.json
+3. The handlebars files are compiled with this posts.json
+4. The index-file is compiled given this posts.json
+5. A dist-folder is prepared (containing the final html- and css-files)
+
 ### The top
-Let's start at the top:
+Let's start at the top, here are some variables that define the files needed for each step:
 ```makefile
 markdown_files := $(shell find src -name '*.md')
 
@@ -28,14 +39,12 @@ distributable_files := $(patsubst compiled_handlebars/%,dist/%,$(compiled_handle
 post_jsons := $(wildcard compiled_handlebars/posts/*.json)
 ```
 
-Here are some variables that define the files needed for each step.
+The following line tells make to create a variable called `markdown_files`, it will use the shell to execute `find src -name '*.md'` which will return all the paths inside the src-folder that end with `.md`.
 ```makefile
 markdown_files := $(shell find src -name '*.md')
 ```
 
-This line tells make to create a variable called `markdown_files`, it will use the shell to execute `find src -name '*.md'` which will return all the paths inside the src-folder that end with `.md`.
-
-The lines following contain a bunch of [`patsubst`](https://www.gnu.org/software/make/manual/make.html#Text-Functions), I basically take the array of markdown files and describe which intermediate files there will be. So the `compiled_markdown_files` live in side the `compiled_markdown`-folder, and the `compiled_handlebars_files` will live inside the `compiled_handlebars`-folder. Note that it also expects .html-files instead of .md files.
+The lines following contain a bunch of [`patsubst`](https://www.gnu.org/software/make/manual/make.html#Text-Functions). patsubst substitute parts of a path, here, I basically take the array of markdown files and describe which intermediate files there will be. So the `compiled_markdown_files` live in side the `compiled_markdown`-folder, and the `compiled_handlebars_files` will live inside the `compiled_handlebars`-folder. 
 
 Then the `distributable_files` live in the `dist` folder. Lastly, as part of one of the steps there will be posts.json created (which will get exposed to the handlebars step).
 

@@ -33,7 +33,7 @@ fill_posts_json:
 	# It is saved into posts.protojson because we don't want to be bothered with comma's
 	cd compiled_markdown/posts; \
 	for f in *.json; \
-		do echo "{ \"slug\": \"/posts/$$(echo $${f%.*})\", \"title\": $$(cat $$f | jq .title), \"createdAt\": $$(cat $$f | jq .createdAt) }" >> ../posts.protojson; \
+		do echo "{ \"slug\": \"/posts/$$(echo $${f%.*})\", \"title\": $$(cat $$f | jq .title), \"description\": $$(cat $$f | jq .description), \"createdAt\": $$(cat $$f | jq .createdAt) }" >> ../posts.protojson; \
 	done; \
 	cd ../..;
 	# jq takes that protojson and formats it properly

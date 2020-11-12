@@ -23,8 +23,8 @@
     --link-color: #60aeee;
     --meta-color: #8A8A8D;
 
-    --border-color: #eee;
-    --aside-color: #666;
+    --border-color: #666;
+    --aside-color: #aaa;
 
     --text-color: #cfcfcf;
     --background-color: #222;
@@ -127,7 +127,7 @@ article > aside {
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-left: 1rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   max-width: 570px;
 }
 
@@ -141,4 +141,9 @@ pre {
   border: 1px solid var(--border-color);
   border-radius: 5px;
   padding: 2px;
+}
+
+hr {
+  border: 1px solid var(--border-color);
+
 }
