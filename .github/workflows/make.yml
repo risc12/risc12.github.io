@@ -18,7 +18,7 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-    
+
     - name: Setup Node
       uses: actions/setup-node@v1
       with:
@@ -28,11 +28,11 @@ jobs:
       run: |
         sudo apt-get install --only-upgrade jq
         make install
-      
+
     # Runs a single command using the runners shell
     - name: Make
       run: make
-    
+
     - name: GitHub Pages
       uses: crazy-max/ghaction-github-pages@v1.5.1
       env:

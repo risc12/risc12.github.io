@@ -7,7 +7,7 @@ distributable_files := $(patsubst compiled_handlebars/%,dist/%,$(compiled_handle
 
 post_jsons := $(wildcard compiled_handlebars/posts/*.json)
 
-all: clean_all $(compiled_markdown_files) fill_posts_json $(compiled_handlebars_files) compile_index move_styles prepare_dist clean
+all: clean_all $(compiled_markdown_files) fill_posts_json $(compiled_handlebars_files) compile_index move_styles prepare_dist clean move_cname
 
 clean_all:
 	rm -r compiled_markdown || true
@@ -68,3 +68,6 @@ install:
 move_styles:
 	mkdir -p dist/assets
 	cp -r src/assets dist/
+
+move_cname:
+	cp CNAME dist/CNAME
