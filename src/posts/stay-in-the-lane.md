@@ -29,12 +29,12 @@ function enrollToCourse(student, course) {
 }
 ```
 
-This function does a bunch of things, which is not necesarrily a bad thing, the problem is that the function nows too much about the specific implementation-details of the objects it is interacting with.
+This function does a bunch of things, which is not necesarrily a bad thing, the problem is that the function knows too much about the specific implementation-details of the objects it is interacting with.
 
-It knows that:
-- Course has a "enrollments"-array and a maxAmountOfEnrollments property.
-- Student has a "outstandingPayments"-array.
-- Both the prerequisites and the achievements are arrays.
+It knows:
+- That course has a "enrollments"-array and a maxAmountOfEnrollments property.
+- That student has a "outstandingPayments"-array.
+- That both the prerequisites and the achievements are arrays.
 - How to construct an object that fits in the enrollments-array.
 
 ## How could this be better?
@@ -76,8 +76,17 @@ The new enrollToCourse-function reads like a set of requirements, if you read it
 All the tiny functions are easy to test, then a few mocks or by putting these methods on classes it is trivial to test the overall behavior.
 
 ### Smaller functions are easier to reason about
-If there is a mistake in one of the tiny functions they are easy to catch, for example if the ">="-operator got switched with an ">="-operator when checking for a spot in the course that would be easier to see if that is done a in named function.
+If there is a mistake in one of the tiny functions they are easy to catch. For example, if the `>=`-operator got switched with an `<=`-operator when checking for room in the course, that would be easier to spot if that is done in a named function.
 
 ### You got some reusability for free!
 The smaller functions can be used in other places within your codebase.
 
+## Example using classes
+
+```js
+
+class Course {
+  isFull() {
+  }
+}
+```
