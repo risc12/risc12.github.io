@@ -15,6 +15,7 @@
 
     --text-color: #222;
     --background-color: #fefefe;
+    --highlighted-background-color: #f3f3f3;
   }
 }
 
@@ -28,6 +29,7 @@
 
     --text-color: #cfcfcf;
     --background-color: #222;
+    --highlighted-background-color: #333;
   }
 }
 
@@ -145,5 +147,30 @@ pre {
 
 hr {
   border: 1px solid var(--border-color);
+}
 
+.postlist {
+  padding: 0;
+}
+
+.postlist h3 {
+  margin-bottom: 0.25rem;
+}
+
+.postlist hr {
+  margin: 0;
+}
+
+.post-anchor {
+  display: block;
+  color: var(--text-color);
+  padding: 0.5rem;
+}
+
+.post-anchor:hover {
+  background-color: var(--highlighted-background-color);
+}
+
+.post-anchor h3 {
+  color: var(--link-color);
 }

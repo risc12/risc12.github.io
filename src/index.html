@@ -16,11 +16,18 @@
       <header>
         <h1>Remco Makes</h1>
         <h2>Posts</h2>
-        <ul>
+        <ul class="postlist">
           {{#each posts}}
             <li>
-              <a href="{{slug}}">{{title}}</a>
-              <p>{{description}}</p>
+              <a class="post-anchor" href="{{slug}}" aria-label="{{title}}">
+                <h3>{{title}}</h3>
+                <div class="meta">
+                  <span>
+                    {{createdAt}}
+                  </span>
+                </div>
+                <p>{{description}}</p>
+              </a>
               <hr />
             </li>
           {{/each}}
