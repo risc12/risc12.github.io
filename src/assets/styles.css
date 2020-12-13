@@ -174,3 +174,28 @@ hr {
 .post-anchor h3 {
   color: var(--link-color);
 }
+
+.cursor {
+  background-color: var(--aside-color);
+  width: 3px;
+  height: 0.9em;
+  margin-bottom: -1px;
+  margin-left: 4px;
+  display: inline-block;
+  animation-name: color;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+}
+
+@keyframes color {
+  0% {
+    background-color: var(--aside-color);
+  }
+  50% {
+    background-color: var(--background-color);
+  }
+  100% {
+    background-color: var(--aside-color);
+  }
+}
