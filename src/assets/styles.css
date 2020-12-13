@@ -94,7 +94,7 @@ header {
   margin-bottom: 2rem;
 }
 
-ul {
+ul.posts, ul.postlist {
   list-style: none;
 }
 
