@@ -1,0 +1,8 @@
+{ "posts": [
+  {
+    "slug": "/posts/generating-sites-with-make",
+    "title": "Generating sites with a Makefile",
+    "description": "As a sideproject I wanted to generate a blog using Makefile, this is a step-by-step explanation of the Makefile powering this blog.",
+    "createdAt": "2020-05-04"
+  }
+] }
