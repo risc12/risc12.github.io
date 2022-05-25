@@ -1,0 +1,3 @@
+[submodule "genuary_2022"]
+	path = genuary_2022
+	url = git@github.com:risc12/genuary_2022.git

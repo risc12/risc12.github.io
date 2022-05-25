@@ -7,7 +7,7 @@ distributable_files := $(patsubst compiled_handlebars/%,dist/%,$(compiled_handle
 
 post_jsons := $(wildcard compiled_handlebars/posts/*.json)
 
-all: clean_all $(compiled_markdown_files) fill_posts_json $(compiled_handlebars_files) compile_index move_styles prepare_dist clean move_cname
+all: clean_all $(compiled_markdown_files) fill_posts_json $(compiled_handlebars_files) compile_index move_styles prepare_dist clean move_cname move_generative
 
 clean_all:
 	rm -r compiled_markdown || true
@@ -23,7 +23,7 @@ clean:
 compiled_markdown/%: src/%
 	mkdir -p $(dir $@)
 	# Use showdown to turn markdown into html, the output-file is the input-file but with html instead of md
-	showdown makehtml --input $< --output $(patsubst %.md,%.html,$@) --metadata
+	showdown makehtml --input $< --output $(patsubst %.md,%.html,$@) -c metadata
 	sed -n "/^---/,/^---/ { /^---/d ; /^---/d ; /^$$/d ; p;}" $< > $(patsubst %.md,%.json,$@)
 
 fill_posts_json:
@@ -62,7 +62,7 @@ prepare_dist:
 	cp data/posts.json dist/index.json
 
 install:
-	npm install showdown -g
+	npm install showdown@2.1.0 -g
 	npm install hbs-cli -g
 
 move_styles:
@@ -71,3 +71,6 @@ move_styles:
 
 move_cname:
 	cp CNAME dist/CNAME
+
+move_generative:
+	cp -r ./genuary_2022 dist/
