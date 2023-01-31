@@ -6,8 +6,6 @@
 }
 ---
 
-# About Refactoring
-
 Technically speaking, refactoring is the act of changing the code without altering its behavior. In practice, however, we often refer to any action that makes the code "prettier" or "better" as refactoring. This makes it difficult to determine when and how to refactor.
 
 ## Does your feature fit right in?
