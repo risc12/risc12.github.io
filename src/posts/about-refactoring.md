@@ -31,42 +31,41 @@ Sometimes when you want to refactor it isn’t necessarily *bad* code, it’s mo
 function changeCase(toUpperCase, stringToChange) {
   if (toUpperCase) return stringToChange.toUpperCase();
 
-	return stringToChange.toLowerCase();
+  return stringToChange.toLowerCase();
 }
 
 // Ternary syntax
 function changeCase(toUpperCase, stringToChange) {
-	return toUpperCase ? stringToChange.toUpperCase() : stringToChange.toLowerCase();
+  return toUpperCase ? stringToChange.toUpperCase() : stringToChange.toLowerCase();
 }
 ```
 
 ```jsx
 // async/await
 function async getUser(id) {
-	try {
+  try {
     const response = await fetch(`myApi/users/${id}`);
-    
+
     if (!response.ok) throw new Error('Request Error');
 
-		const user = response.json();
+    const user = response.json();
 
-		return user
-    
+    return user;
   } catch () {
-    throw new Error('Unable to feth user')
+    throw new Error('Unable to feth user');
   }
 }
 
 // Promise
 function getUser(id) {
-	return fetch(`myApi/users/${id}`)
-		.then(response => {
-			if (!response.ok) throw new Error('Request Error');
+  return fetch(`myApi/users/${id}`)
+    .then(response => {
+      if (!response.ok) throw new Error('Request Error');
     })
-		.then(response => response.json())
+    .then(response => response.json())
     .catch(() => {
-	    throw new Error('Unable to feth user')
-		})
+      throw new Error('Unable to feth user')
+    })
 }
 ```
 
@@ -99,4 +98,4 @@ Incremental changes also seem to break less or at least less explosively. Increm
 
 To make your refactor a success, I would try to test the surface area of your refactor and then refactor. This removes a lot of the guesswork out of the process.
 
-If you think the code is a bit smelly but you’re not completely sure what is wrong with it and how to resolve it. It is good to think in terms of code-smells and refactoring-recipes, a great website for that is the [refactor-guru website](https://refactoring.guru/refactoring/catalog).
+If you think the code is a bit smelly but you’re not completely sure what is wrong with it and how to resolve it. It is good to think in terms of code-smells and refactoring-recipes, a great website for that is the [refactoring.guru website](https://refactoring.guru/refactoring/catalog).
