@@ -4,6 +4,7 @@
   "description": "Static Site Generator",
   "dependencies": {
     "showdown": "^2.1.0",
-    "hbs-cli": "^1.4.1"
+    "hbs-cli": "^1.4.1",
+    "glob-promise": "^6.0.3"
   }
 }
