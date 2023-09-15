@@ -42,7 +42,7 @@ fill_posts_json:
 compiled_handlebars/%: compiled_markdown/%
 	mkdir -p $(dir $@)
 	# Replace instance of [[post]] in the posts-template with the contents of the post.html
-	sed -e "/[[post]]/{r $<" -e "d" -e "}" 'src/layouts/posts.html' > $@
+	sed -e "/\[\[post\]\]/{r $<" -e "d" -e "}" 'src/layouts/posts.html' > $@
 	# Render the handlebars, give it the metadata
 	# TODO: Expose partials and helpers 
 	npx hbs --data $(patsubst %.html,%.json,$<) --data 'src/data/*.json' --data 'data/posts.json' $@ --output $(dir $@)
