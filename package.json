@@ -1,0 +1,9 @@
+{
+  "name": "risc12.github.io",
+  "version": "1.0.0",
+  "description": "Static Site Generator",
+  "dependencies": {
+    "showdown": "^2.1.0",
+    "hbs-cli": "^1.4.1"
+  }
+}

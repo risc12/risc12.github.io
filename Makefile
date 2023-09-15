@@ -23,7 +23,7 @@ clean:
 compiled_markdown/%: src/%
 	mkdir -p $(dir $@)
 	# Use showdown to turn markdown into html, the output-file is the input-file but with html instead of md
-	showdown makehtml --input $< --output $(patsubst %.md,%.html,$@) -c metadata
+	npx showdown makehtml --input $< --output $(patsubst %.md,%.html,$@) -c metadata
 	sed -n "/^---/,/^---/ { /^---/d ; /^---/d ; /^$$/d ; p;}" $< > $(patsubst %.md,%.json,$@)
 
 fill_posts_json:
@@ -45,14 +45,14 @@ compiled_handlebars/%: compiled_markdown/%
 	sed -e "/[[post]]/{r $<" -e "d" -e "}" 'src/layouts/posts.html' > $@
 	# Render the handlebars, give it the metadata
 	# TODO: Expose partials and helpers 
-	hbs --data $(patsubst %.html,%.json,$<) --data 'src/data/*.json' --data 'data/posts.json' $@ --output $(dir $@)
+	npx hbs --data $(patsubst %.html,%.json,$<) --data 'src/data/*.json' --data 'data/posts.json' $@ --output $(dir $@)
 	mkdir $(patsubst %.html,%,$@)
 	mv $@ $(patsubst %.html,%/index.html,$@)
 
 compile_index:
 	# Render the handlebars of the index, give it the metadata
 	# TODO: Expose partials and helpers 
-	hbs --data 'src/data/*.json' --data 'data/posts.json' src/index.html --output compiled_handlebars/
+	npx hbs --data 'src/data/*.json' --data 'data/posts.json' src/index.html --output compiled_handlebars/
 
 prepare_dist:
 	# A clean procedure to move the built files to the dist folder.
@@ -62,8 +62,7 @@ prepare_dist:
 	cp data/posts.json dist/index.json
 
 install:
-	npm install showdown@2.1.0 -g
-	npm install hbs-cli -g
+	npm install
 
 move_styles:
 	mkdir -p dist/assets
