@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - The Sandmachine</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+<h1>The Sandmachine</h1>
+
+<main>
+  <div class="big-button" onclick="onToggle()">
+    💤
+  </div>
+  <div class="buttons">
+    <button id="white" class="type">White</button>
+    <button id="pink" class="type active">Pink</button>
+    <button id="brown" class="type">Brown</button>
+  </div>
+
+  <div class="buttons">
+    <button class="fade" onclick="fadeOut(5, 0)">5s</button>
+    <button class="fade" onclick="fadeOut(5*60, 0)">5m</button>
+    <button class="fade" onclick="fadeOut(15*60, 0)">15m</button>
+    <button class="fade" onclick="fadeOut(30*60, 0)">30m</button>
+  </div>
+
+  <progress min="0" max="100" value="100"></progress>
+
+  <hr />
+
+  <details>
+    <summary>Advanced</summary>
+
+    <fieldset>
+      <label>Lowpass</label>
+      <input id="lp" type="range" min="0" max="100" value="100">
+    </fieldset>
+  </details>
+
+  <div class="buy-me-a-coffee">
+    <div class="buy-my-a-coffee-btn-cont">
+      <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="remcomakes" data-color="#000000" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
+    </div>
+  </div>
+</main>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.40/Tone.js'></script>
+<script src='https://cdn.jsdelivr.net/gh/swevans/unmute/unmute.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>

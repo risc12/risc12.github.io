@@ -7,7 +7,7 @@ distributable_files := $(patsubst compiled_handlebars/%,dist/%,$(compiled_handle
 
 post_jsons := $(wildcard compiled_handlebars/posts/*.json)
 
-all: clean_all $(compiled_markdown_files) fill_posts_json $(compiled_handlebars_files) compile_index move_styles prepare_dist clean move_cname move_generative
+all: clean_all $(compiled_markdown_files) fill_posts_json $(compiled_handlebars_files) compile_index move_styles prepare_dist clean move_cname move_generative move_the_sandmachine
 
 clean_all:
 	rm -r compiled_markdown || true
@@ -73,3 +73,6 @@ move_cname:
 
 move_generative:
 	cp -r ./genuary_2022 dist/
+
+move_the_sandmachine:
+	cp -r ./the-sandmachine dist/
