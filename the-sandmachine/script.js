@@ -25,16 +25,12 @@ function onStart() {
 }
 
 function onStop() {
-  console.log("onStop");
   osc.stop();
   isPlaying = false;
   document.body.classList.remove("active");
 }
 
 function onToggle() {
-  console.log("Toggle");
-  const toggle = document.getElementById("toggle");
-
   if (isPlaying) {
     onStop();
   } else {
