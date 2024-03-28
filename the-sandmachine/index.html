@@ -22,15 +22,6 @@
     <button id="brown" class="type">Brown</button>
   </div>
 
-  <div class="buttons">
-    <button class="fade" onclick="fadeOut(5, 0)">5s</button>
-    <button class="fade" onclick="fadeOut(5*60, 0)">5m</button>
-    <button class="fade" onclick="fadeOut(15*60, 0)">15m</button>
-    <button class="fade" onclick="fadeOut(30*60, 0)">30m</button>
-  </div>
-
-  <progress min="0" max="100" value="100"></progress>
-
   <hr />
 
   <details>
@@ -40,6 +31,20 @@
       <label>Lowpass</label>
       <input id="lp" type="range" min="0" max="100" value="100">
     </fieldset>
+
+    <fieldset>
+      <label>Fade-out</label>
+      <br />
+      <div class="buttons">
+        <button class="fade" onclick="fadeOut(5, 0)">5s</button>
+        <button class="fade" onclick="fadeOut(5*60, 0)">5m</button>
+        <button class="fade" onclick="fadeOut(15*60, 0)">15m</button>
+        <button class="fade" onclick="fadeOut(30*60, 0)">30m</button>
+      </div>
+
+      <progress min="0" max="100" value="100"></progress>
+    </fieldset>
+
   </details>
 
   <div class="buy-me-a-coffee">

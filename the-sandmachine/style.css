@@ -80,23 +80,46 @@ button:not(:first-child) {
 
 button.type {
   font-weight: 400;
-  border: 2px solid transparent;
+  border: 2px solid #222;
+
+  transform: translateY(-10px);
+
+  transition: all 0.1s ease-out;
+}
+
+#white {
+  box-shadow: 2px 15px 0px #222;
+}
+
+#pink {
+  box-shadow: 0 15px 0px #222;
+}
+
+#brown {
+  box-shadow: -2px 15px 0px #222;
+}
+
+button.type.active {
+  transform: translateY(0px);
 }
 
 #white.active {
   color: #777;
   background-color: rgba(255, 255, 255, 0.15);
   border: 2px solid #777;
+  box-shadow: 2px 5px 0px #777, 2px 5px 15px #777;
 }
 #pink.active {
   color: #8e1a65;
   background-color: rgba(255, 53, 184, 0.15);
   border: 2px solid #8e1a65;
+  box-shadow: 0 5px 0px #8e1a65, 0 5px 15px #8e1a65;
 }
 #brown.active {
   color: #7d4f3e;
   background-color: rgba(255, 140, 98, 0.15);
   border: 2px solid #7d4f3e;
+  box-shadow: -2px 5px 0px #7d4f3e, -2px 5px 15px #7d4f3e;
 }
 
 fieldset {
