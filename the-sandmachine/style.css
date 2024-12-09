@@ -1,0 +1,233 @@
+@import url("https://fonts.googleapis.com/css2?family=Splash&display=swap");
+
+body {
+  background: #000;
+  color: #999;
+  font-family: "Helvetica Neue", sans-serif;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+  min-height: 100dvh;
+  padding: 0;
+  margin: auto;
+  max-width: 900px;
+}
+
+.header {
+  text-align: center;
+  margin: 15px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+
+  background: linear-gradient(to top, #111, #262626);
+
+  padding: 15px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-family: "Splash";
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.active h1 {
+  color: #ddd;
+  text-shadow:
+    /* White glow */ 0 0 1px #bbb, /* Red glow */ 0 0 5px #b00,
+    0 0 15px #b00, 0 0 40px rgba(255, 0, 0, 1), 0 0 92px rgba(255, 0, 0, 0.5),
+    0 0 102px rgba(255, 0, 0, 1);
+}
+
+main {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 15px;
+}
+
+button {
+  flex: 1;
+  height: 55px;
+  background-color: #111;
+  border: none;
+  color: #999;
+
+  border-radius: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+
+  border: 2px solid transparent;
+}
+
+button.fade.active {
+  border: 2px solid #999;
+}
+
+button:not(:first-child) {
+  margin-left: 10px;
+}
+
+button.type {
+  font-weight: 400;
+  border: 2px solid #222;
+
+  transform: translateY(-10px);
+
+  transition: all 0.1s ease-out;
+}
+
+#white {
+  box-shadow: 2px 15px 0px #222;
+}
+
+#pink {
+  box-shadow: 0 15px 0px #222;
+}
+
+#brown {
+  box-shadow: -2px 15px 0px #222;
+}
+
+button.type.active {
+  transform: translateY(0px);
+}
+
+#white.active {
+  color: #777;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 2px solid #777;
+  box-shadow: 2px 5px 0px #777, 2px 5px 15px #777;
+}
+#pink.active {
+  color: #8e1a65;
+  background-color: rgba(255, 53, 184, 0.15);
+  border: 2px solid #8e1a65;
+  box-shadow: 0 5px 0px #8e1a65, 0 5px 15px #8e1a65;
+}
+#brown.active {
+  color: #7d4f3e;
+  background-color: rgba(255, 140, 98, 0.15);
+  border: 2px solid #7d4f3e;
+  box-shadow: -2px 5px 0px #7d4f3e, -2px 5px 15px #7d4f3e;
+}
+
+fieldset {
+  border: none;
+  margin-bottom: 15px;
+  background-color: #181818;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+fieldset label {
+  padding-bottom: 5px;
+}
+
+input[type="range"] {
+  margin: auto;
+  width: 100%;
+}
+
+hr {
+  width: 100%;
+  border: 1px solid #000;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+progress {
+  width: 100%;
+  visibility: hidden;
+}
+
+progress.visible {
+  visibility: visible;
+}
+
+progress[value] {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+  appearance: none;
+
+  width: 100%;
+  height: 20px;
+  border: 1px solid #222;
+  border-radius: 15px;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #111;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress[value]::-webkit-progress-value {
+  background: #222;
+}
+
+.big-button {
+  width: 100vw;
+  height: 100vw;
+
+  max-width: 180px;
+  max-height: 180px;
+
+  background-color: #333;
+
+  border-radius: 100%;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0.4rem 0.4rem 0.8rem #000, -0.4rem -0.4rem 0.8rem #222;
+  background: linear-gradient(to bottom right, #000 0%, #222 100%);
+
+  transition: box-shadow ease-out 0.2s, text-shadow ease-out 0.2s;
+  font-size: 2rem;
+
+  color: transparent;
+  text-shadow: 0 0 0 #666;
+}
+
+.active .big-button {
+  box-shadow: 0.4rem 0.4rem 0.8rem #000, -0.4rem -0.4rem 0.8rem #222,
+    0 0 20px 2px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 0, 0, 0.5),
+    0 0 92px rgba(255, 0, 0, 0.5), 0 0 102px rgba(255, 0, 0, 0.1);
+
+  text-shadow: 0 0 0 #ddd, /* White glow */ 0 0 1px #bbb,
+    /* Red glow */ 0 0 5px #b00, 0 0 15px #b00, 0 0 40px rgba(255, 0, 0, 1),
+    0 0 92px rgba(255, 0, 0, 0.5), 0 0 102px rgba(255, 0, 0, 1);
+}
+
+.buy-me-a-coffee {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+
+  align-self: flex-end;
+  margin-top: auto;
+}
+
+.buy-me-a-coffee .bmc-btn {
+  min-width: unset;
+  opacity: 0.5;
+}

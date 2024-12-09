@@ -1,0 +1,113 @@
+body {
+  display: flex;
+  background-color: #222;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  padding: 0;
+  margin: 0;
+}
+
+body.black {
+  background-color: black;
+}
+
+.piece {
+  margin: 5px;
+  text-align: center;
+}
+
+.canvas {
+  border: 5px solid black;
+  box-shadow: 0 0 5px black;
+  padding: 15px;
+}
+
+a#back {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  z-index: 1;
+}
+
+a {
+  color: #666;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+.ui {
+  display: none;
+}
+
+.ui.open {
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  background-color: #222;
+  padding-top: 25px;
+  color: #888;
+  height: 100vh;
+}
+
+.ui .control {
+  margin: 5px;
+}
+
+.control {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #111;
+}
+
+.control label {
+  width: 100%;
+}
+
+.control input[type='range'] {
+  padding: 5px;
+}
+.control input{
+  width: 100%;
+}
+
+input.range-value {
+  width: 100%;
+}
+
+
+input, input:focus-visible{
+  border: none;
+  outline: none;
+  background-color: #111;
+  color: #888;
+  padding: 5px;
+}
+
+.button {
+  background-color: #444;
+  color: #111;
+  border: none;
+  padding: 5px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+  padding: 0;
+  margin: 0;
+}

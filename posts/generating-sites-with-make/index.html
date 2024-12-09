@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Remco Makes | Generating sites with a Makefile</title>
+  <meta name="description" content="Generating sites with a Makefile">
+  <meta name="author" content="Remco Peggeman">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/assets/styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <main>
+    <article>
+      <header>
+        <h1><a href="/">Remco Makes</a><span class="cursor" /></h1>
+        <h2>Generating sites with a Makefile</h2>
+        <div class="meta">
+          <span>
+            🗓 2020-05-04
+          </span>
+          <!--
+            <span>
+              🏷 Try-outs
+            </span>
+          -->
+        </div>
+      </header>
+<p>As a sideproject I wanted to generate a blog using a <a href="https://www.gnu.org/software/make/manual/make.html">Makefile</a>.</p>
+<p>I can't really recommend it and there are quite some improvements to <em>make</em>(no pun intended), but I learned some things regardless!</p>
+<p>To see the version of the Makefile that this post is about, you can find it on <a href="https://github.com/risc12/risc12.github.io/blob/d393078d210c71d30934ea9bf30b6bf3f047ade5/Makefile">GitHub</a>.</p>
+<aside>If you are playing around with Makefiles, and it isn't working as it should, make sure you use tabs, not spaces. That one might've gotten me once or twice...</aside>
+<p>Without further ado, let's see how it works!</p>
+<h3 id="theflow">The flow</h3>
+<p>I want to be able to write Markdown files, add some meta-data to them, and then generate the complete blog. The flow can be desribed as follows:</p>
+<ol>
+<li>Markdown files are compiled into:<ol>
+<li>A .html file containing handlebars</li>
+<li>A .json-file containing meta-data about the post</li></ol></li>
+<li>The meta-data files are combined into one posts.json</li>
+<li>The handlebars files are compiled with this posts.json</li>
+<li>The index-file is compiled given this posts.json</li>
+<li>A dist-folder is prepared (containing the final html- and css-files)</li>
+</ol>
+<h3 id="thetop">The top</h3>
+<p>Let's start at the top, here are some variables that define the files needed for each step:</p>
+<pre><code class="makefile language-makefile">markdown_files := $(shell find src -name '*.md')
+
+compiled_markdown_files := $(patsubst src/%,compiled_markdown/%,$(markdown_files))
+compiled_handlebars_files := $(patsubst %.md,%.html,$(patsubst src/%,compiled_handlebars/%,$(markdown_files)))
+
+distributable_files := $(patsubst compiled_handlebars/%,dist/%,$(compiled_handlebar_files))
+
+post_jsons := $(wildcard compiled_handlebars/posts/*.json)
+</code></pre>
+<p>The following line tells make to create a variable called <code>markdown_files</code>, it will use the shell to execute <code>find src -name '*.md'</code> which will return all the paths inside the src-folder that end with <code>.md</code>.</p>
+<pre><code class="makefile language-makefile">markdown_files := $(shell find src -name '*.md')
+</code></pre>
+<p>The lines following contain a bunch of <a href="https://www.gnu.org/software/make/manual/make.html#Text-Functions"><code>patsubst</code></a>. patsubst substitute parts of a path, here, I basically take the array of markdown files and describe which intermediate files there will be. So the <code>compiled_markdown_files</code> live in side the <code>compiled_markdown</code>-folder, and the <code>compiled_handlebars_files</code> will live inside the <code>compiled_handlebars</code>-folder. </p>
+<p>Then the <code>distributable_files</code> live in the <code>dist</code> folder. Lastly, as part of one of the steps there will be posts.json created (which will get exposed to the handlebars step).</p>
+<h3 id="definingrules">Defining rules</h3>
+<p>So, when those variables are out of the way, let's define some rules. Rules are normally in the form of:</p>
+<pre><code class="makefile language-makefile">target … : prerequisites …
+    recipe
+</code></pre>
+<p>But you can also give the target a name that it will not create, I use those for utility-rules like clean-ups and intallations.</p>
+<p>You are able to define wildcards using <code>%</code>. The recipe is called for every file in the dependency-list and accessible using the <code>$&lt;</code>-variable, the target file is accessible using <code>$@</code>.</p>
+<h4 id="all"><code>all:</code></h4>
+<p>This is the first rule, it doesn't create a file called all, but it is the first rule, and whenever <code>make</code> get's executed without a rule-name it will execute the first one. The prerequisites is a list of all the steps I want to take:</p>
+<pre><code class="makefile language-makefile">all: clean_all $(compiled_markdown_files) fill_posts_json $(compiled_handlebars_files) compile_index move_styles prepare_dist clean
+</code></pre>
+<p>So make knows, in order to sucesfully execute this step, I need all those files, it also knows the rules for those files so it will execute them ony by one.</p>
+<h4 id="clean_all"><code>clean_all:</code></h4>
+<p>Let's take a look at our first recipe!</p>
+<pre><code class="makefile language-makefile">clean_all:
+    rm -r compiled_markdown || true
+    rm -r data || true
+    rm -r compiled_handlebars || true
+    rm -r dist || true
+</code></pre>
+<p>This rule says it will create the file <code>clean_all</code>, it doesn't have any prerequisites, and it will execute the following lines one by one.</p>
+<p>Note the <code>|| true</code> at the end of each line will make sure that this recipe is succesfull, even when the files don't exists.</p>
+<p>The next rule, clean, is the same but doesn't remove the dist-folder.</p>
+<h4 id="compiled_markdown"><code>compiled_markdown/%:</code></h4>
+<p>We encountered a wild wildcard!</p>
+<pre><code class="makefile language-makefile">compiled_markdown/%: src/%
+    mkdir -p $(dir $@)
+    showdown makehtml --input $&lt; --output $(patsubst %.md,%.html,$@) --metadata
+    sed -n "/^---/,/^---/ { /^---/d ; /^---/d ; /^$$/d ; p;}" $&lt; &gt; $(patsubst %.md,%.json,$@)
+</code></pre>
+<p>This rule will create the files inside of <code>compiled_markdown</code>, it needs the files inside <code>src/</code> to do it and it will run the recipe for all files inside of <code>src</code>.</p>
+<p>Let's go over the lines inside the recipe one by one:</p>
+<pre><code class="makefile language-makefile">    mkdir -p $(dir $@)
+</code></pre>
+<p>This will create a folder for the directory that the target file is in, so for example for the file <code>src/posts/first-post.md</code> it will create <code>compiled_markdown/posts/</code>.</p>
+<pre><code class="makefile language-makefile">    showdown makehtml --input $&lt; --output $(patsubst %.md,%.html,$@) --metadata
+</code></pre>
+<p>This will create the actual html files from markdown, the <code>--metadata</code>-flag will make sure the metadata gets removed from the output.</p>
+<p>At last, we take the metadata and put it in a JSON file:</p>
+<pre><code class="makefile language-makefile">    sed -n "/^---/,/^---/ { /^---/d ; /^---/d ; /^$$/d ; p;}" $&lt; &gt; $(patsubst %.md,%.json,$@)
+</code></pre>
+<h3 id="fill_posts_json"><code>fill_posts_json:</code></h3>
+<p>To create a json-file that we can feed into handlebars we create the data-folder, create a posts.json inside there.</p>
+<p>Then for every post.json file we append its contents into a posts.protojson file, finally we sort that file by cretedAt, make sure it is a proper array and output it into data/posts.json.</p>
+<h3 id="compiled_handlebarscompiled_markdown"><code>compiled_handlebars/%: compiled_markdown/%</code></h3>
+<p>So we compiled the markdown into html, now it is time to take the json file, and compile the handlebars template.</p>
+<p>The sed command:</p>
+<pre><code class="makefile language-makefile">    sed -e "/[[post]]/{r $&lt;" -e "d" -e "}" 'src/layouts/posts.html' &gt; $@
+</code></pre>
+<p>Will first replace the magic string [[post]] in the layout with the contents of the post. Now we have that all figured out I use <code>hbs</code> to compile the template:</p>
+<pre><code class="makefile language-makefile">    hbs --data $(patsubst %.html,%.json,$&lt;) --data 'src/data/*.json' --data 'data/posts.json' $@ --output $(dir $@)
+</code></pre>
+<p>Finally, to make the urls a bit prettier, I create a a folder with the name of the post, and rename the <code>&lt;post-name&gt;.html</code> to <code>index.html</code>.</p>
+<h3 id="compile_index"><code>compile_index:</code></h3>
+<p>This rule takes the <code>src/index.html</code> and renders it with the <code>data/posts.json</code>.</p>
+<h3 id="prepare_dist"><code>prepare_dist:</code></h3>
+<p>Almost there, this step is just there to copy some files around, namely the compiled handlebars and json-files.</p>
+<h3 id="clean"><code>clean</code></h3>
+<p>Lastly, we remove the intermediate folders.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>As you can see, this works (you're looking at the result right now). My main goal was to make something that worked ony any old Unix-like system, but unfortunately I still rely on NPM for <code>showdown</code> and <code>hbs-cli</code>, so I didn't manage that. I still like this though, it is something custom, quite simple, pretty fast, and doesn't rely on major frameworks.</p>
+<p>Feel free you check my setup on the <a href="https://github.com/risc12/risc12.github.io/tree/release"><code>release</code>-branch</a></p>
+<p>I might dive into the setup of the GitHub Action that make sure this deploys in a later post.</p>    </article>
+  </main>
+
+  <nav>
+    <div class="section">
+      <h3>Posts</h3>
+      <ul class="posts">
+          <li>
+            <a href="/posts/introducing-the-sandmachine">Introducing The Sandmachine</a>
+          </li>
+          <li>
+            <a href="/posts/about-refactoring">About refactoring</a>
+          </li>
+          <li>
+            <a href="/posts/generating-sites-with-make">Generating sites with a Makefile</a>
+          </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_wzm6XdoukHzbfqLXw2DCt28ujxmoczP7wHUEY7JJqac',{api_host:'https://eu.posthog.com', persistence: 'memory'})
+  </script>
+</body>
+</html>

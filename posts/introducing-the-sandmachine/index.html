@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Remco Makes | Introducing The Sandmachine</title>
+  <meta name="description" content="Introducing The Sandmachine">
+  <meta name="author" content="Remco Peggeman">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/assets/styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <main>
+    <article>
+      <header>
+        <h1><a href="/">Remco Makes</a><span class="cursor" /></h1>
+        <h2>Introducing The Sandmachine</h2>
+        <div class="meta">
+          <span>
+            🗓 2024-03-07
+          </span>
+          <!--
+            <span>
+              🏷 Try-outs
+            </span>
+          -->
+        </div>
+      </header>
+<p>Last year I become a dad to my beautiful son. As it seems to be the case with all newborns he seemed to have some problems sleeping long stretches at a time, waking up multiple times in an hour. After reading multiple articles and Reddit posts it seemed like it would be helpfull to play some white noise during the night so he wouldn't be woken up by tiny noises and to simulate the soundscape in the womb.</p>
+<p>I set out to find a free app on the AppStore or just a web app that simply made some noise, but all of them seemed to have some problems! Most apps were either too complex, not free, or wouldn't keep playing when I locked the screen</p>
+<p>That's when I decided to create my own!</p>
+<p><a href="/the-sandmachine">Click here to try it out!</a></p>
+<h3 id="prototyping">Prototyping</h3>
+<p>I relied heavily on CodePen's Live View (not sponsored, unfortunately) for this project. I started out with just the WebAudio API and a button. That source-code no longer lies around, but it looked something like this:</p>
+<pre><code class="html language-html">&lt;!-- Inspired by https://noisehack.com/generate-noise-web-audio-api/--&gt;
+&lt;script&gt;
+  const audioContext = new(window.AudioContext || window.webkitAudioContext);
+
+  const bufferSize = 2 * audioContext.sampleRate;
+  const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+
+  for (var i = 0; i &lt; bufferSize; i++) {
+    /* Create a random sample between -1 and 0, then divide it by 10 so it isnt too loud */
+    output[i] = (Math.random() * 2 - 1) / 10; 
+  }
+
+  const whiteNoise = audioContext.createBufferSource();
+  whiteNoise.buffer = noiseBuffer;
+  whiteNoise.loop = true;
+  whiteNoise.connect(audioContext.destination);
+
+  function start() {
+    whiteNoise.start(0);
+  }
+
+  function stop() {
+    whiteNoise.stop(0);
+  }
+&lt;/script&gt;
+
+&lt;button onClick="start"&gt;Start The Noise&lt;/button&gt;
+&lt;button onClick="stop"&gt;Stop The Noise&lt;/button&gt;
+</code></pre>
+<p>I tweaked the design a ton, and played around with filters and different modules from the amazing <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">Web Audio API</a>.</p>
+<h3 id="muteandthelockscreen">Mute and the Lockscreen</h3>
+<p>It turns out, whenever you use Web Audio API, it isn't being interpreted as "media" by iOS. That means that you can't hear the noise whenever your phone is muted! That's not ideal. Besides, it seems that the Web Audio stops when the phone is locked. This isn't very nice because it means having to keep the screen active, which was one of the issues I faced with other solutions.</p>
+<p>It turns out the fix for that is to play some sound over an 'audio'-tag…</p>
+<p>I tried implementing this myself, and got quite somewhere, but it wasn't very stable…</p>
+<p>Turns out I'm not the only one with this problem! Swevans on Github created <a href="https://github.com/swevans/unmute">unmute.js</a> especially for this case!</p>
+<h3 id="differenttypesofnoise">Different types of noise</h3>
+<p>White noise can be quite thin and hissy, this is because the noise is evenly distributed across the frequency spectrum. Our ears percieve mid-high frequencies as louder! Brown and pink noise might be more suitable, where pink noise tilts the power/frequency relationship. Lower frequncies get louder and higher frequencies get softer. Brown noise uses <a href="https://en.m.wikipedia.org/wiki/Brownian_noise">Brownian noise</a> and tilts even further, even cutting out some high tones completely! </p>
+<p>At first I naively tried implementing these myself by combining different type of filters and playing around with different oscillators within the Web Audio API.</p>
+<p>Then I stumbled onto <a href="https://tonejs.github.io/">Tone.js</a>. I might've seen Tone.js a few times before but dismissed it as being overkill. Now my codebase was growing past a couple of functions and I felt silly for trying to build it all myself! This was supposed to be a tool just for me!</p>
+<p>So while I learned lot from building everything myself, it turned out to be a lot more fun to rely on Tone.js.</p>
+<p>Instead of creating a noise buffer, a bunch of filters and then playing that I could just use the specific noise-oscillator that I wanted from Tone.js!</p>
+<pre><code class="js language-js">const selectedNoise = "pink";
+
+const osc = new Tone.Noise({
+  type: selectedNoise, volume: 0
+}).toDestination();
+</code></pre>
+<h3 id="additionalfeatures">Additional features</h3>
+<p>By moving over to Tone.js it also made it way easier to connect a simple controllable low-pass filter to the oscillator so I could tweak the sound as needed. I decided to also implement a fade-out, so if I wanted to turn the noise off I could hit one of the buttons and it would fade out over the specified amount of time before shutting off.</p>
+<h3 id="sourcecode">Sourcecode</h3>
+<p>The code used to only be on CodePen: https://codepen.io/Risc12/pen/oNqrydB</p>
+<p>But because it is now also part of this website (<a href="/the-sandmachine">click here to view the app</a>) the code is also on <a href="https://github.com/risc12/risc12.github.io/tree/release/the-sandmachine">GitHub</a>.</p>
+<p><button id="the-sandmachine-feedback">Please let me know what you think!</button></p>    </article>
+  </main>
+
+  <nav>
+    <div class="section">
+      <h3>Posts</h3>
+      <ul class="posts">
+          <li>
+            <a href="/posts/introducing-the-sandmachine">Introducing The Sandmachine</a>
+          </li>
+          <li>
+            <a href="/posts/about-refactoring">About refactoring</a>
+          </li>
+          <li>
+            <a href="/posts/generating-sites-with-make">Generating sites with a Makefile</a>
+          </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/javascript.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_wzm6XdoukHzbfqLXw2DCt28ujxmoczP7wHUEY7JJqac',{api_host:'https://eu.posthog.com', persistence: 'memory'})
+  </script>
+</body>
+</html>

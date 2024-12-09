@@ -1,0 +1,20 @@
+{ "posts": [
+  {
+    "slug": "/posts/introducing-the-sandmachine",
+    "title": "Introducing The Sandmachine",
+    "description": "I needed a simple web-app to generate noise.",
+    "createdAt": "2024-03-07"
+  },
+  {
+    "slug": "/posts/about-refactoring",
+    "title": "About refactoring",
+    "description": "When, how and what to refactor?",
+    "createdAt": "2023-01-31"
+  },
+  {
+    "slug": "/posts/generating-sites-with-make",
+    "title": "Generating sites with a Makefile",
+    "description": "As a sideproject I wanted to generate a blog using Makefile, this is a step-by-step explanation of the Makefile powering this blog.",
+    "createdAt": "2020-05-04"
+  }
+] }
