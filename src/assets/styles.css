@@ -5,6 +5,8 @@
 /* Supersede dark mode when applicable */
 @import "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-dark-reasonable.min.css" screen and (prefers-color-scheme: dark);
 
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap');
+
 @media (prefers-color-scheme: light) {
   :root {
     --link-color: #6464ff;
@@ -44,7 +46,8 @@ h1 {
 
 h2 {
   margin-top: 0;
-  font-size: 2rem;
+  font-size: 3rem;
+  font-family: "DM Serif Text";
   margin-bottom: 0.5rem;
 }
 
