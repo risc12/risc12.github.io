@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - The Sandmachine</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+<h1>The Sandmachine</h1>
+
+<main>
+  <div class="big-button" onclick="onToggle()">
+    💤
+  </div>
+  <div class="buttons">
+    <button id="white" class="type">White</button>
+    <button id="pink" class="type active">Pink</button>
+    <button id="brown" class="type">Brown</button>
+  </div>
+
+  <hr />
+
+  <details>
+    <summary>Advanced</summary>
+
+    <fieldset>
+      <label>Lowpass</label>
+      <input id="lp" type="range" min="0" max="100" value="100">
+    </fieldset>
+
+    <fieldset>
+      <label>Fade-out</label>
+      <br />
+      <div class="buttons">
+        <button class="fade" onclick="fadeOut(5, 0)">5s</button>
+        <button class="fade" onclick="fadeOut(5*60, 0)">5m</button>
+        <button class="fade" onclick="fadeOut(15*60, 0)">15m</button>
+        <button class="fade" onclick="fadeOut(30*60, 0)">30m</button>
+      </div>
+
+      <progress min="0" max="100" value="100"></progress>
+    </fieldset>
+
+  </details>
+
+  <div class="buy-me-a-coffee">
+    <div class="buy-my-a-coffee-btn-cont">
+      <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="remcomakes" data-color="#000000" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
+    </div>
+  </div>
+</main>
+<!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.40/Tone.js'></script>
+<script src='https://cdn.jsdelivr.net/gh/swevans/unmute/unmute.js'></script><script  src="./script.js"></script>
+<script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_wzm6XdoukHzbfqLXw2DCt28ujxmoczP7wHUEY7JJqac',{api_host:'https://eu.posthog.com', persistence: 'memory'})
+</script>
+</body>
+</html>
